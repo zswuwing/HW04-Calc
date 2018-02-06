@@ -1,32 +1,42 @@
 defmodule Calc do
-  def main(x) do
+  def main() do
 
-    #x = IO.gets "Give me your prompt: (q for exit())\n"
+    x = IO.gets "Give me your prompt: (q for exit())\n"
     if x == "q" do
-      IO.puts "out"
-    else
-      #discuss with zeng cheng and see his code
       x
-      |> String.replace("+", " + ")
-      |> String.replace("(", " ( ")
-      |> String.replace("/", " / ")
-      |> String.replace(")", " ) ")
-      |> String.replace("-", " - ")
-      |> String.replace("*", " * ")
-      |> String.split
-      |> Enum.map(fn(x) ->
-        cond do
-          (x == "+") || (x == "-") || (x == "*") || (x == "/") || (x == "(") || (x == ")") ->
-            x
-          true ->
-            elem(Float.parse(x), 0)
-        end
-      # this part
-      end)
-      |>infixToPostFix([],[])
-
+      |> IO.puts
+    else
+      x
+      |> make_post()
+      |> IO.puts
+      main()
     end
+
   end
+
+  def make_post(s) do
+    #discuss with zeng cheng and see his code
+    s
+    |> String.replace("+", " + ")
+    |> String.replace("(", " ( ")
+    |> String.replace("/", " / ")
+    |> String.replace(")", " ) ")
+    |> String.replace("-", " - ")
+    |> String.replace("*", " * ")
+    |> String.split
+    |> Enum.map(fn(x) ->
+      cond do
+        (x == "+") || (x == "-") || (x == "*") || (x == "/") || (x == "(") || (x == ")") ->
+          x
+        true ->
+          elem(Float.parse(x), 0)
+      end
+    # this part
+    end)
+    |>infixToPostFix([],[])
+
+  end
+
 
   # discuss with zeng Cheng
   def eval(fomual, stack1) do
